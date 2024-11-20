@@ -43,7 +43,11 @@ app.get("/posts", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
     const index = buscarPostPorID(req.params.id);
-    res.status(200).json(posts[index]);
+    
+    if (index === -1)
+        res.status(404).send();
+    else
+        res.status(200).json(posts[index]);
 });
 
 function buscarPostPorID(id) {
