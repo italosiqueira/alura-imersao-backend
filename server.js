@@ -1,4 +1,7 @@
 import express from "express";
+import conectarAoBanco from "./src/config/dbconfig.js";
+
+const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
 const posts = [
     {
@@ -41,9 +44,17 @@ app.get("/api", (req, res) => {
     res.status(200).send({ "name": "instalike", "version": "0.1" });
 });
 
-app.get("/posts", (req, res) => {
+app.get("/posts", async (req, res) => {
+    const posts = await getTodosPosts();
     res.status(200).json(posts);
 });
+
+async function getTodosPosts() {
+    const db = conexao.db("imersao-instabyte");
+    const colecao = db.collection("posts");
+
+    return colecao.find().toArray();
+}
 
 app.get("/posts/:id", (req, res) => {
     const index = buscarPostPorID(req.params.id);
