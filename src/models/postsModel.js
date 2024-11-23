@@ -5,11 +5,20 @@ const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 // Conecta ao banco de dados utilizando a string de conexão fornecida pela variável de ambiente STRING_CONEXAO.
 // O resultado da conexão é armazenado na variável conexao.
 
-export default async function getTodosPosts() {
+export async function getTodosPosts() {
     const db = conexao.db("imersao-instabyte");
     // Obtém o banco de dados 'imersao-instabyte' da conexão.
     const colecao = db.collection("posts");
     // Obtém a coleção 'posts' do banco de dados.
     return colecao.find().toArray();
     // Executa uma consulta para encontrar todos os documentos na coleção 'posts' e retorna um array com os resultados.
+}
+
+
+export async function criarPost(novoPost) {
+    const db = conexao.db("imersao-instabyte");
+    // Obtém o banco de dados 'imersao-instabyte' da conexão.
+    const colecao = db.collection("posts");
+    // Obtém a coleção 'posts' do banco de dados.
+    return colecao.insertOne(novoPost);
 }
