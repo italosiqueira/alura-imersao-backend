@@ -132,3 +132,4 @@ dist
 # Local app
 chave-api.txt
 .env
+uploads/
